@@ -171,12 +171,11 @@ int move_disc_to_peg(int origin_peg, int dest_peg) {
     return SUCCESS;
 }
 
-int check_for_win() {
+int check_for_win(int peg_id) {
     // checks if any peg other than the first one is fully stacked (win condition)
-    for (int peg_id = 1; peg_id < N_OF_PEGS; peg_id++) {
-        if (pegs[peg_id][0] == N_OF_DISCS) {
+    if (peg_id > 0 && peg_id < N_OF_PEGS &&
+        pegs[peg_id][0] == N_OF_DISCS) {
             return SUCCESS;
-        }
     }
     return FAILURE;
 }
@@ -202,7 +201,7 @@ int main() {
             if (move_disc_to_peg(selected_peg1, selected_peg2) == FAILURE) {
                 move_disc_to_peg(selected_peg1, selected_peg1);
             } else {
-                if (check_for_win() == SUCCESS) {
+                if (check_for_win(selected_peg2) == SUCCESS) {
                     draw_end_screen();
                     return 1;
                 }
